@@ -1,2 +1,2 @@
-* [目录](/markdown)
+* [目录](/)
 * [markdown语法](/markdown/)
