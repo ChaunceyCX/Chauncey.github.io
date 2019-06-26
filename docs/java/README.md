@@ -1,3 +1,4 @@
-# Spring Boot 学习笔记
+# JAVA 学习笔记
 
-- [随笔(待整理)](./springBoot/sth)
+- [Spring-RestTemplate](./java/sth)
+- [线程](./java/thread)
