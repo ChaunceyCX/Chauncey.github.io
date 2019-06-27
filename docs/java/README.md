@@ -5,4 +5,5 @@
 
 ## TODO
 
-[] builde 模式
+[] java builde模式
+[] java 反射机制
