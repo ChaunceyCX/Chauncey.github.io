@@ -9,6 +9,7 @@
 >Spring Data JPA是Spring基于ORM框架/JPA规范的基础上封装的一套JPA应用框架
 
 ### 配置
+
 ```
 //maven
 <dependency>
@@ -29,8 +30,8 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 spring.jpa.properties.hibernate.hbm2ddl.auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 spring.jpa.show-sql=true
-
 ```
+
 1. spring.jpa.properties.hibernate.hbm2ddl.auto有以下几种配置:
    
    - create:每次加载都会删除上一次生成的表(包括数据),然后重新生成新表,适用于每次执行测试前清空数据库的场景
@@ -42,6 +43,7 @@ spring.jpa.show-sql=true
 2. Respository
 
 - 建立entity
+
 ```
 @Entity
 @Data  //lombok 自动set/get
@@ -58,7 +60,9 @@ public class User {
     private int age;
 }
 ```
+
 - 声明对应Repository接口,继承JpaRepository,默认支持CRUD操作
+
 ```
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -68,6 +72,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 ```
 
 - 测试
+
 ```
 @Autowired
 private UserRepository userRepository;
@@ -84,7 +89,8 @@ public void userTest() {
     log.info(JsonUtils.toJson(item));
 }
 ```
-3. 实现原理
+
+1. 实现原理
 
 对测试进行debug,可以发现userRepository被注入了一个动态代理,被代理的类是JpaRepository的一个实现SimpleJpaRepositpry
 
@@ -108,7 +114,7 @@ public void testBaseQuery() throws Exception {
     userRepository.delete(user);
     userRepository.count();
     userRepository.exists(1l);
-    // ...
+    //
 }
 ```
 
@@ -124,8 +130,8 @@ List<User> findByEmailLike(String email);
 User findByUserNameIgnoreCase(String userName);
 List<User> findByUserNameOrderByEmailDesc(String email);
 ```
-具体命名方式如下:
 
+具体命名方式如下:
 
 Keyword	| Sample	| JPQL snippet
 -|-|-
@@ -154,9 +160,11 @@ TRUE|	findByActiveTrue()|	… where x.active = true
 FALSE|	findByActiveFalse()|	… where x.active = false
 IgnoreCase|	findByFirstnameIgnoreCase|	… where UPPER(x.firstame) = UPPER(?1)
 
+
 - 复杂查询
   - 分页查询
   >在查询时需要传入参数Pageable,当有多个参数时Pageable建议作为最后一个参数传入,使用Pageable时需要传入页数,每页条目数和排序规则
+
 ```
 Page<User> findALL(Pageable pageable);
 Page<User> findByUserName(String userName,Pageable pageable);
@@ -180,11 +188,11 @@ Page<User> queryFirst10ByLastname(String lastname, Pageable pageable);
 List<User> findFirst10ByLastname(String lastname, Sort sort);
 
 List<User> findTop10ByLastname(String lastname, Pageable pageable);
-
 ```
 
   - 自定义SQL查询
   >在 SQL 的查询方法上面使用 @Query 注解，如涉及到删除和修改在需要加上 @Modifying 。也可以根据需要添加 @Transactional 对事物的支持，查询超时的设置等
+
 ```
 @Modifying
 @Query("update User u set u.userName = ?1 where c.id = ?2")
@@ -199,8 +207,10 @@ void deleteByUserId(Long id);
 @Query("select u from User u where u.emailAddress = ?1")
 User findByEmailAddress(String emailAddress);
 ```
+
   - 多表查询
   >多表查询在 spring data jpa 中有两种实现方式，第一种是利用 hibernate 的级联查询来实现，第二种是创建一个结果集的接口来接收连表查询后的结果，这里介绍第二种方式。
+
 ```
 //创建结果集
 public interface HotelSummary {
@@ -220,10 +230,8 @@ public interface HotelSummary {
 //定义方法
 @Query("select h.city as city, h.name as name, avg(r.rating) as averageRating from Hotel h left outer join h.reviews r where h.city = ?1 group by h")
 Page<HotelSummary> findByCity(City city, Pageable pageable);
-
 @Query("select h.name as name, avg(r.rating) as averageRating from Hotel h left outer join h.reviews r group by h")
 Page<HotelSummary> findByCity(Pageable pageable);
-
 //返回类型设置为结果集
 Page<HotelSummary> hotels = this.hotelRepository.findByCity(new PageRequest(0, 10, Direction.ASC, "name"));
 ```
