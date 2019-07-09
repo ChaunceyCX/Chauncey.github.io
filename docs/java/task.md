@@ -70,5 +70,23 @@ public class CronSchedulerJob
 
 ## Quartz
 
+### Quartz体系结构
+
+quartz核心概念:
+
+- Job(任务): 为一个接口,只定义一个方法execute(JobExecutionContext context),定义任务要执行的具体方法
+- JobDetail(任务信息):表示一个可以执行的调度程序,Job是这个程序所要执行的内容,另外JobDetail还包含了这个任务调度的方案和策略
+- Trigger(触发器):描述Job执行的 时间触发规则,主要有SimpleTrigger和CronTrigger两个子类
+- Scheduler:是一个调度容器,JobDetail和Trigger可以注册到其中
+
+集群Quartz应用
+
+- 伸缩性
+- 负载均衡
+- 高可用
+- Quartz可以通过关系数据库做持久化存储支持集群
+- Terracotta扩展quartz提供集群功能而不需要数据库支持
+
+
 
 

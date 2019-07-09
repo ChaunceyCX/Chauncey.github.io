@@ -286,7 +286,19 @@ class ReentrantLockDemo {
 
 - 两个内部类:WriteLock,ReadLock
 
+## 线程池简单了解
 
+>线程池可以看做线程的集合,在没有任务时线程处于空闲状态,当请求到来:线程池给这个任务一个空闲线程,任务完成后回到线程池中等待下次任务而不是销毁,这样就实现了线程的重用
+
+### JDK提供的线程池
+
+>JDK提供了Excutor框架来使用线程池,它是线程的基础,Excutor提供了一种"任务提交"与"任务执行"分离开的机制
+
+>callable:可以理解为Runnable的扩展,Runnable没有返回值和不能抛出受检测的异常而Claaable可以
+
+ ### ThreadPoolExecutor(常用的线程池) [TODO]
+
+ 
 
 
 
