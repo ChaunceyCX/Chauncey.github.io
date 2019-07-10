@@ -144,7 +144,7 @@
 
 1. 创建线程的方法:
     - 继承Thread类,重写run()方法;
-    - 
+  
     ```java
     public class MyThread extends Thread{
         @Override
@@ -277,7 +277,7 @@
         values.parallelStream().forEach(p-> System.out.println(p));
     }
     ```
-    
+
 2. sleep() 与 wait() 的区别?
 
     >sleep()会让线程进入阻塞状态,时间结束继续运行(不会释放锁)
