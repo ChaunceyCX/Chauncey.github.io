@@ -144,6 +144,7 @@
 
 1. 创建线程的方法:
     - 继承Thread类,重写run()方法;
+    - 
     ```java
     public class MyThread extends Thread{
         @Override
@@ -164,7 +165,9 @@
         }
     }
     ```
+
     - 实现Runnable接口,重写run()方法
+
     ```java
     //Runnable只是用来修饰所执行的任务的,它不是一个线程对象,想要启动一个Runnable任务必须将它放到线程对象里面
     public class MyThread implements Runnable {
@@ -181,6 +184,7 @@
     ```
 
     - 匿名内部类创建线程对象
+
     ```java
     public static void main(String[] args) {
         //创建无参数线程对象
@@ -202,6 +206,7 @@
     ```
 
     - 创建带返回值的线程
+
     ```java
     public class MyThread implements Callable {
         @Override
@@ -221,7 +226,9 @@
         }
     }
     ```
+
     - 定时器Timer创建
+
     ```java
     public void main(String[] args) {
         Timer timer = new Timer();
@@ -233,7 +240,9 @@
         },0,1000); //延迟0,周期1s
     }
     ```
+
     - 线程池创建线程
+
     ```java
     public static void main(String[] args) {
         //创建一个有十个线程的线程池
@@ -254,7 +263,9 @@
         threadPool.shutdown();
     }
     ```
+
     - 利用Java8新特性stream实现并发
+
     ```java
     public static void main(String[] args) {
         List<Integer> values = Arrays.asList(10,20,30,40);
@@ -265,6 +276,8 @@
         //乱序输出说明是并发执行的
         values.parallelStream().forEach(p-> System.out.println(p));
     }
+    ```
+    
 2. sleep() 与 wait() 的区别?
 
     >sleep()会让线程进入阻塞状态,时间结束继续运行(不会释放锁)
