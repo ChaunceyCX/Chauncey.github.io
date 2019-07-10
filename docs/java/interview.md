@@ -143,10 +143,12 @@
 ## 线程相关
 
 1. 创建线程的方法:
-    - 继承Thread类,重写run()方法;
-  
-    ```java
-    public class MyThread extends Thread{
+
+- 继承Thread类,重写run()方法;
+
+```java
+    public class MyThread extends Thread {
+
         @Override
         public void run() {
             while(! interrupted()) { // @@1
@@ -164,11 +166,12 @@
             // 禁止调用stop();方法,该方法不会释放占用的资源
         }
     }
-    ```
 
-    - 实现Runnable接口,重写run()方法
+```   
 
-    ```java
+- 实现Runnable接口,重写run()方法
+
+```java
     //Runnable只是用来修饰所执行的任务的,它不是一个线程对象,想要启动一个Runnable任务必须将它放到线程对象里面
     public class MyThread implements Runnable {
         @Override
@@ -181,11 +184,11 @@
             t1.start();
         }
     }
-    ```
+```
 
-    - 匿名内部类创建线程对象
+- 匿名内部类创建线程对象
 
-    ```java
+```java
     public static void main(String[] args) {
         //创建无参数线程对象
         new Thread() {
@@ -203,11 +206,11 @@
             }
         }).start();
     }
-    ```
+```
 
-    - 创建带返回值的线程
+- 创建带返回值的线程
 
-    ```java
+```java
     public class MyThread implements Callable {
         @Override
         public Object call() throws Exception {
@@ -225,11 +228,11 @@
             Integer result = task.get();
         }
     }
-    ```
+```
 
-    - 定时器Timer创建
+- 定时器Timer创建
 
-    ```java
+```java
     public void main(String[] args) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -239,11 +242,11 @@
             }
         },0,1000); //延迟0,周期1s
     }
-    ```
+```
 
-    - 线程池创建线程
+- 线程池创建线程
 
-    ```java
+```java
     public static void main(String[] args) {
         //创建一个有十个线程的线程池
         ExecutorService threadPool = Executors.newFixedThreadPool(10);
@@ -262,11 +265,11 @@
         //销毁线程池
         threadPool.shutdown();
     }
-    ```
+```
 
-    - 利用Java8新特性stream实现并发
+- 利用Java8新特性stream实现并发
 
-    ```java
+```java
     public static void main(String[] args) {
         List<Integer> values = Arrays.asList(10,20,30,40);
         //parallel: 平行的,并行的
@@ -276,7 +279,7 @@
         //乱序输出说明是并发执行的
         values.parallelStream().forEach(p-> System.out.println(p));
     }
-    ```
+```
 
 2. sleep() 与 wait() 的区别?
 
