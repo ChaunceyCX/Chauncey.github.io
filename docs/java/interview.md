@@ -6,18 +6,18 @@
 
 >由于不同操作系统之间所支持的指令集存在差异,所以在操作系统上加个虚拟机提供统一的接口来屏蔽系统之间的差异
 
-2. Java的8中基本数据类型?
-   
-    | 数据类型 | 字节 | 默认值 | 包装类型 |
-    | -----   | --- | ----- | ----    |
-    | byte    | 1   |   0   | Byte    |
-    | short   | 2   |   0   | Short   |
-    | int     | 4   |   0   | Integer |
-    | long    | 8   |   0   | Long    |
-    | float   | 4   | 0.0f  | Float   |
-    | double  | 8   | 0.0d   | Double |
-    | char    | 2   |'\u0000'| Character|
-    | boolean | 4   |false   | Boolean |
+2. Java8中基本数据类型?
+  
+| 数据类型 | 字节 | 默认值 | 包装类型 |
+| -----   | --- | ----- | ----    |
+| byte    | 1   |   0   | Byte    |
+| short   | 2   |   0   | Short   |
+| int     | 4   |   0   | Integer |
+| long    | 8   |   0   | Long    |
+| float   | 4   | 0.0f  | Float   |
+| double  | 8   | 0.0d   | Double |
+| char    | 2   |'\u0000'| Character|
+| boolean | 4   |false   | Boolean |
 
 - 自动装箱与自动拆箱:
   > 自动装箱: new Integer(1),底层调用:Integer.valueOf(1),得到的是一个对象
@@ -27,7 +27,7 @@
   2. 存储方式以及存储位置不同:基本数据类型存储在栈中,而包装类型存储在
   3. 初始值不同:包装类型的初始值为null
 
-3. ==和equals的区别?
+1. ==和equals的区别?
 
 > == 比较的是两个引用在内存中是不是同一个对象
 > equals用来比较某些特征,String的equals是重写后的,实现比较两个对象内容是否相等
