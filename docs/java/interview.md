@@ -21,15 +21,18 @@
 
 - 自动装箱与自动拆箱:
   > 自动装箱: new Integer(1),底层调用:Integer.valueOf(1),得到的是一个对象
+  >
   > 自动拆箱: int i = new Integer(1) ; 底层调用的是i.intValue(); 得到的是int
+
 - 基本数据类型与包装类型的区别:
   1. 声明方式不同;
-  2. 存储方式以及存储位置不同:基本数据类型存储在栈中,而包装类型存储在
+  2. 存储方式以及存储位置不同:基本数据类型存储在栈中,而包装类型存储在堆中
   3. 初始值不同:包装类型的初始值为null
 
-1. ==和equals的区别?
+3. ==和equals的区别?
 
 > == 比较的是两个引用在内存中是不是同一个对象
+> 
 > equals用来比较某些特征,String的equals是重写后的,实现比较两个对象内容是否相等
 
 4. String/StringBuffer/StringBuilder的区别
@@ -37,7 +40,7 @@
        - String底层使用一个不可变字符数组:private final char value[]; 所以它的内容不可变;
        - StringBuffer和StringBuilder都继承了AbstractStringBuilder底层使用的是可变数组:char[] value;
    2. 线程安全:
-        - StringBuilder是线程不安全的,效率极高;而StringBuffer是线程不安全的,效率极低,StringBuffer的append()方法有同步锁,而StringBuilder没有
+        - StringBuilder是线程不安全的,效率极高;而StringBuffer是线程安全的,效率极低,StringBuffer的append()方法有同步锁,而StringBuilder没有
     3. 相同点:
         - StringBuffer与StringBuilder有共同的父类:AbstractStringBuilder
     4. 操作可变字符串的速度: StringBuilder>StringBuffer>String
@@ -51,16 +54,16 @@
 6. ArrayList和LinkedList区别?
    
     - ArrayList基于动态数组的数据结构,LinkedList基于链表的数据结构
-    - 由于两者数据结构的区别:对于随机访问(get和set)ArrayList由于LinkedList(因为LinkedList要移动指针),对于新增和删除,LinkedList占优势,因为链表只需要连接相应指针
+    - 由于两者数据结构的区别:对于随机访问(get和set)ArrayList优于LinkedList(因为LinkedList要移动指针),对于新增和删除,LinkedList占优势,因为链表只需要连接相应指针
 
     ### ArrayList与LinkedList源码分析:
-    [ArrayList源码解析](./ArrayListSource )
+    [ArrayList源码解析](/java/ArrayListSource )
 
-    [LinkedList源码解析](./LinkedListSource )
+    [LinkedList源码解析](/java/LinkedListSource )
 
 7. 集合中ConCurrentModificationException异常出现的原因
    ```java
-   public void main (String[] args) {
+   public static void main (String[] args) {
        ArrayList<Integer> list = new ArayList<>();
        list.add(2);
        Iterator<Integer> iterator = list.iterator();
