@@ -226,151 +226,135 @@ System.out.println( ( (1<3)?"a":"b" ) + ( 3+4 ) );
     - 复制算法(新生代)
     https://mp.weixin.qq.com/s?__biz=MzI4Njc5NjM1NQ==&mid=2247487745&idx=1&sn=29e33490f20a38f65059b03aaceed3cf&chksm=ebd62e2ddca1a73b1c662cc4fa3a5b651cb271d2601063db190e0fded8144fc054990da8ef0b&scene=21#wechat_redirect
 
+22. 一个" .Java "源文件中是否可以包含多个类?
 
+>可以有多个类,但是只能有一个public的类(或者内部类),但是public类名需要与文件名一致
 
-## 线程相关
+23. Java有没有"goto"?
 
-1. 创建线程的方法:
+>作为Java保留字,现在还没偶在Java中使用
 
+24. 说说&和&&的区别?
 
-- 继承Thread类,重写run()方法;
+- 两者都可以作为逻辑与的运算符,符号两边都为true是,整个运算结果才为true
+- &&具有短路功能,所以当符号左边为false时,结果就为false不会再去看符号右边
+- &还可以作为位运算符,当两边都不是boolean类型时就会做按位与运算(用法:通常取一个整数的低四位时会对该整数与0X0f进行按位与运算)
+
+25. 在java中如何跳出当前的多重嵌套循环?
+
+    1. 外层循环定义标号
 
 ```java
-    public class MyThread extends Thread {
-
-        @Override
-        public void run() {
-            while(! interrupted()) { // @@1
-                //do sth
+@Test
+    public void testBreak () {
+        tag :
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 2 ; j++) {
+                System.out.println(i+"++" +j);
+                if (j==1)
+                    break tag;
             }
-        }
-
-        public static void main(String[] args) {
-            MyThread t1 = new MyThread("t1");
-            t1.start();
-
-
-            t1.interrupt(); //@@2 
-            // 想要中断线程时最好结合 @@1 和 @@2 调用interrupt()方法实现
-            // 禁止调用stop();方法,该方法不会释放占用的资源
-        }
-    }
-
-```   
-
-- 实现Runnable接口,重写run()方法
-
-```java
-    //Runnable只是用来修饰所执行的任务的,它不是一个线程对象,想要启动一个Runnable任务必须将它放到线程对象里面
-    public class MyThread implements Runnable {
-        @Override
-        public void run() {
-            //do sth
-        }
-
-        public static void main(String[] args) {
-            Thread t1 = new Thread(new MyThread());
-            t1.start();
         }
     }
 ```
 
-- 匿名内部类创建线程对象
+    2. 让外层循环条件表达式受内层循环控制
 
 ```java
-    public static void main(String[] args) {
-        //创建无参数线程对象
-        new Thread() {
-            @Override
-            public void run() {
-                //do sth
-            }
-        }.start();
-
-        //创建带线程任务的线程对象
-        new Thread( new Runnable() {
-            @Override
-            public void run() {
-                //do sth
-            }
-        }).start();
-    }
-```
-
-- 创建带返回值的线程
-
-```java
-    public class MyThread implements Callable {
-        @Override
-        public Object call() throws Exception {
-            int result = 1;
-            //do sth
-            return result;
-        }
-
-        public static void main(String[] args) {
-            MyThread t1 = new MyThread();
-            FutureTask<Integer> task = new FutureTask<Integer>(t1);
-            Thread thread = new Thread(task);
-            thread.start();
-
-            Integer result = task.get();
-        }
-    }
-```
-
-- 定时器Timer创建
-
-```java
-    public void main(String[] args) {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //do sth
-            }
-        },0,1000); //延迟0,周期1s
-    }
-```
-
-- 线程池创建线程
-
-```java
-    public static void main(String[] args) {
-        //创建一个有十个线程的线程池
-        ExecutorService threadPool = Executors.newFixedThreadPool(10);
-        long threadPoolUseTime = System.currentTimeMillis();
-        for (int i=0; i<10; i++) {
-            threadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    //do sth
+@Test
+    public void testBreak () {
+        boolean tag = true;
+        for (int i = 0; i < 3&&tag; i++) {
+            for (int j = 0; j < 2 ; j++) {
+                System.out.println(i+"++" +j);
+                if (j==1) {
+                    tag = false;
+                    break;
                 }
-            });
+            }
         }
-        long threadPoolUseTime1 = System.currentTimeMills();
-        //多线程用时
-        threadPoolUserTime1-threadPoolUseTime;
-        //销毁线程池
-        threadPool.shutdown();
     }
 ```
 
-- 利用Java8新特性stream实现并发
+26. java1.7之后switch支持String了
+
+27. short s1 = 1； s1 = s1 +1； s1 += 1；解读？
+
+- s1 = s1 + 1： s1+1时会自动提升运算类型为int，但是赋值给s1时编译器将报告需要强转类型错误
+- s1+=1：由于+=是Java语言定义的运算符所以java编译器会进行特殊处理，因此可以正确编译
+
+28. char能不能存储一个中文汉字？
+
+>char类型是用来存储Unicode编码字符的,unicode字符集包含了汉字所以可以存储汉字(注意有些汉字不在unicode里面就不能存储了)
+
+29. 最有效率计算2乘以8?
+    
+    > 2<<3(2左移3位),一个数左移几位代表乘以2的几次方
+
+30. final修饰的变量,其对应的引用地址不能变,但是引用所指向的对象属性可以变
 
 ```java
-    public static void main(String[] args) {
-        List<Integer> values = Arrays.asList(10,20,30,40);
-        //parallel: 平行的,并行的
-        //所以此行代表并发执行sum();
-        int result = values.parallelStream().mapToInt(p->p*2).sum();
+final StringBuffer a = new StringBuffer("xxx");
 
-        //乱序输出说明是并发执行的
-        values.parallelStream().forEach(p-> System.out.println(p));
-    }
+//报错
+a= new StringBuffer("");
+//正确
+a.append("aaa");
 ```
 
-2. sleep() 与 wait() 的区别?
+31. 静态变量与实例变量的区别?
 
-    >sleep()会让线程进入阻塞状态,时间结束继续运行(不会释放锁)
-    >wait()会让线程释放锁进入等待队列,notify/notifyall后会进入就绪队列
+- 语法定义上的区别: 静态变量要加static关键字
+- 程序运行时区别: 实例变量属于对象的属性只有创建了对象实例变量才会分配空间.静态变量不属于对象,属于类,只要程序加载了类的字节码,不用创建任何实例对象,就会给静态变量分配内存空间,静态变量可以直接通过类名引用
+
+```java
+//无论创建多少实例对象,永远分配了一个静态变量空间,所以每次创建一个对象staticVar就会较上一次加一
+public class VariantTest {
+    public static int staticVar = 0;
+    public int instanceVar = 0;
+    public VariantTest(){
+        staticVar++;
+        instanceVar++;
+    }
+}
+```
+
+32. 是否可以从一个static方法访问一个非static方法?
+
+>不可以,因为非静态方法要与对象关联在一起,要创建一个对象后访问该对象上的非静态方法
+
+33. Math.round(),Math.ceil(),Math.floor()用法?
+
+>Math.round():加0.5向下取整;
+>Math.ceil():向上取整;Math.ceil(11.3)=12,ceil(-11.3)=-11
+>Math.floor():向下取整;Math.floor(11.6)=11,-11.6=-12
+
+34. Overload和Override的区别?
+
+- Overload是重载的意思,Override是覆盖的意思,也就是重写
+- 重载表示一个类中可以有多个名称相同的方法,但这些方法的参数类型以及个数不同(如果参数不同返回值也可以不同,如果参数相同)
+- 覆盖表示子类继承父类重写父类的方法,覆盖的方法参数一致返回值一致
+
+35. 接口是否可以继承接口?抽象类是否可以实现接口?抽象类是否可以继承具体类?抽象类中是否可以有静态main方法?
+
+- 都可以
+- 抽象类与普通类的唯一区别就是不能创建实例对象和允许有abstract方法
+
+36. 内部类可以引用它的包含类成员吗?有什么限制?
+
+>完全可以,但是如果是静态内部类只能引用静态成员
+
+```java
+class Out {
+    static int x;
+    static class Inner {
+        void test() {
+            sout(x);
+        }
+    }
+}
+```
+
+37. [集合相关](/java/interview-collection)
+
+38. [线程相关](/java/interview-thread)
