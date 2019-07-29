@@ -61,11 +61,11 @@ sudo rm /var/lib/pacman/db.lck
 ## 安装输入法
 
 ```
-yay -S fcitx-im
+##遇到搜狗无法启动,删除配置重启之类的需要fcitx-qt4所以安装这个fcitx
+yay -S fcitx-lilydjwg-git
+yay -S fcitx-qt5
 yay -S fcitx-configtool
 yay -S fcitx-sogoupinyin
-##遇到搜狗无法启动,删除配置重启之类的
-yay -S fcitx-qt4
 ```
 
 创建配置文件~/.xprofile
@@ -194,7 +194,28 @@ npm config set registry https://registry.npm.taobao.org
 ```
 
 ## 美化
+
+```
+#安装ocs-url
+yay -S ocs-url
+```
+
 [gnome look](https://www.gnome-look.org/p/1013030/)
+
+- 应用:Flat-Remix-GTK-Blue-Darker-Solid
+- 图标:Papirus
+- Shell:Flat-Remix
+- GDM(Loc):
+  - 1. ocs安装[master](https://github.com/daniruiz/flat-remix-gnome/archive/master.zip)
+  - 2. 安装相关依赖:
+
+    yay -S glib2 imagemagick 
+  - 3. sudo make install
+
+
+### shell 扩展
+ 
+ - 
 
 ## 开机自动挂载硬盘
 
@@ -270,4 +291,73 @@ mvn -v
    
 [setting.xml]()
 
+## 蓝牙音响没有声音
+
+1. 安装必要的包
+
+```
+yay -S bluez bluez-utils pulseaudio-bluetooth pavucontrol pulseaudio-alsa pulseaudio-bluetooth-a2dp-gdm-fix
+```
+
+2. 重启蓝牙服务
+
+```
+
+systemctl restart bluetooth
+
+```
+
+3. 重新启动pulseaudio服务
+
+```
+sudo killall pulseaudio
+```
+
+4. 移除耳机重新链接
+
+## 双系统蓝牙设备连接
+
+1. win10下建立与鼠标的蓝牙配对
+2. 切换到manjaro下建立蓝牙鼠标配对
+3. 获取配对linkkey
+
+```
+sudo -i
+cd /var/lib/bluetooth/
+ls -l
+#进入电脑蓝牙mac目录
+cd {PC-mac}
+# 找到蓝牙键鼠的mac地址命名的文件夹
+cd {mac}
+cat info  //查看蓝牙链接信息
+复制LinkKey
+```
+
+4. 切换到win10,下载[PSTooLs](https://technet.microsoft.com/en-us/sysinternals/bb897553)
+
+将压缩包解压后,以管理员身份运行cmd,在解压目录下执行命令打开特殊注册表
+
+```
+PsExec.exe -s -i regedit
+```
+
+找到```HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\BTHPORT\Parameters\Keys\```
+
+如下图:![regedit](../img/win10_mac_key.png)
+
+5. 讲设备对应的key替换
+
+## vscode zsh乱码
+
+1. 下载需要的字体
+
+```
+cd /usr/share/fonts/
+sudo git clone https://github.com/abertsch/Menlo-for-Powerline.git
+sudo fc-cache -f -v
+```
+
+2. 设置vscode中终端的字体
+
+![font](../img/vs_terminal_font.jpg.png)
 
