@@ -78,6 +78,11 @@ quartz核心概念:
 - JobDetail(任务信息):表示一个可以执行的调度程序,Job是这个程序所要执行的内容,另外JobDetail还包含了这个任务调度的方案和策略
 - Trigger(触发器):描述Job执行的 时间触发规则,主要有SimpleTrigger和CronTrigger两个子类
 - Scheduler:是一个调度容器,JobDetail和Trigger可以注册到其中
+- JobBuilder: 定义和创建JobDetail实例
+- TriggerBuilder: 定义和创建Trigger实例
+- JobDataMap: 是Map接口的一个实现可以赋予job一些额外属性
+  - 在创建jobdetail时存入key,value:usingJobData("key","value")
+  - 在调度job执行里面的内容时可以获取之前放入的属性
 
 集群Quartz应用
 
@@ -86,6 +91,15 @@ quartz核心概念:
 - 高可用
 - Quartz可以通过关系数据库做持久化存储支持集群
 - Terracotta扩展quartz提供集群功能而不需要数据库支持
+
+### 创建流程(只做springboot的整合)
+
+1. 导入依赖:
+
+```
+
+
+
 
 
 

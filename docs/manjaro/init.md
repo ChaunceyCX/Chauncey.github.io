@@ -361,3 +361,7 @@ sudo fc-cache -f -v
 
 ![font](../img/vs_terminal_font.jpg.png)
 
+groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s]', '').split(',').toList(); for(i = 0; i < params.size(); i++) 
+{ if(i!=0)result+= ' * '; if(i==0)result+=params[i] + ((i < (params.size() - 1)) ? '\\n' + ' ' : ''); else result+='@param ' + params[i] + ((i < (params.size() - 1)) ? '\\n' + ' ' : ''); 
+}; return result", methodParameters())
+

@@ -470,5 +470,50 @@ Student b = a;
 
 51. request的getAttribute()和getParameter()的区别
     1. getParameter()是通过类似post,get等方式传入的数据
-    2. 
+    2. getAttribute()与setAttribute()关联使用仅仅在web容器内流转
+    3. getAttribute()返回对象,getParameter()返回字符串
+
+52. JDBC 访问数据库的基本步骤是什么?
+    1. 加载数据库驱动
+    2. 通过DriverManager对象获取连接对象Connection
+    3. 通过连接对象获取回话
+    4. 通过会话进行数据库的增删改查
+    5. 关闭资源
+
+```java
+//加载Mysql驱动
+Class.forName("com.mysql.jdbc.Driver");
+//获取数据库链接
+Connection conn = DriverManager.getConnection("jdbc:mysql://ip:port/db","name","password");
+//操作数据库
+Statement stmt = conn.crateStatement();
+// PreparedStatement pstmt = conn.prepareStatement(sql带问号);
+ResultSet rs = stmt.ececuteQuery("SQL");
+while(rs.next()){
+    sout(rs.getString("culumeKey"))
+} 
+rs.close;
+stmt.close;
+conn.close;
+```
+
+53. JDBC事务
+
+    1. 设置手动提交:conn.setAutoComit(false);
+    2. 提交事务:conn.commit();
+    3. 出现异常回滚:conn.rollback();
+
+54. 数据库脏读
+
+>当使用事务时有一行数据刚刚写入,与此同时另外一个查询读到这个数据,但是写入的这行数据可能会回滚,这样就导致了脏读
+
+>数据库的```TRANSACTIONREADCOMMITTED,TRANSACTIONREPEATABLEREAD,TRANSACTION_SERIALIZABLE```隔离级别可以防止脏读
+
+56. 什么是幻读
+
+>如果一个数据正在写入一条数据,与此同时另一条事务刚好查询到这条数据,然而写入数据的事务执行了回滚就会导致查询结果变动就是幻读
+>使用```TRANSACTION_SERIALIZABLE```数据库隔离级别可以防止幻读
+
+57. 
+
 
