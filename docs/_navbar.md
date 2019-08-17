@@ -7,3 +7,4 @@
   - [JAVA学习](/java/)
   - [React](/react/)
   - [Manjaro配置](/manjaro/init)
+  - [工具](/tools/git)
