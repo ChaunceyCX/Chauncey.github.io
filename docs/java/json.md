@@ -1,4 +1,4 @@
-# object/jason 互转(jackson)
+# object/json 互转(jackson)
 
 ## 使用jackson的ObjectMapper实现互转
 

@@ -1,0 +1,4 @@
+- **manjaro配置**
+  - [初始配置](/manjaro/init)
+  - [mysql安装](/manjaro/mysql)
+  - [其它](/manjaro/config)

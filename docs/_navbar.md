@@ -5,3 +5,5 @@
   - [React-Native笔记](/react_native/)
   - [es与js](/js-es/)
   - [JAVA学习](/java/)
+  - [React](/react/)
+  - [Manjaro配置](/manjaro/)
