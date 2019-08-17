@@ -6,4 +6,4 @@
   - [es与js](/js-es/)
   - [JAVA学习](/java/)
   - [React](/react/)
-  - [Manjaro配置](/manjaro/)
+  - [Manjaro配置](/manjaro/init)
