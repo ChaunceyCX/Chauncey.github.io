@@ -1,0 +1,9 @@
+- google-chrome
+- vscode
+	- zh
+	- markdown-all-in-one
+	- IntelliJ IDEA Keybindings
+- idea
+- telegram
+- plank
+- 

@@ -13,7 +13,7 @@ sudo pacman -Syy
 - 添加在“/etc/pacman.conf”文件末尾添加:
 
 ```
-[srchlinuxcn]
+[archlinuxcn]
 #SidLevel = Optional TrustAll
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ```
@@ -62,10 +62,7 @@ sudo rm /var/lib/pacman/db.lck
 
 ```
 ##遇到搜狗无法启动,删除配置重启之类的需要fcitx-qt4所以安装这个fcitx
-yay -S fcitx-lilydjwg-git
-yay -S fcitx-qt5
-yay -S fcitx-configtool
-yay -S fcitx-sogoupinyin
+yay -S fcitx-configtool fcitx-sogoupinyin fcitx-qt4
 ```
 
 创建配置文件~/.xprofile
@@ -83,7 +80,7 @@ export XMODIFIERS="@im=fcitx"
 
 ```
 git config --global user.name "ChaunceyCX"
-git config --global user.email "chaunceyxie1995@gmail.com"
+git config --global user.email "chaunceyxcx@gmail.com"
 #存储密码
 git config credential.helper store
 ```
