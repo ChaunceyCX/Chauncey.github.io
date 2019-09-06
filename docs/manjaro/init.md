@@ -110,7 +110,7 @@ UUID=096EFA44E563571A                     /home/chauncey/hd2 ntfs nouser,rw 0 0
 
 ```
 x ./jdk-8u221-linux-x64.tar.gz
-mv xxx /opt/
+mv xxx /opt/jdk
 ```
 
 2. 配置环境变量
@@ -118,7 +118,7 @@ mv xxx /opt/
 修改/etc/profile
 
 ```
-JAVA_HOME=/opt/jdk1.8.0_221
+JAVA_HOME=/opt/jdk
 CLASSPATH=.:$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar
 PATH=$JAVA_HOME/bin:$PATH
 export JAVA_HOME CLASSPATH PATH
@@ -137,8 +137,8 @@ java -version
 
 ```
 x ./apache-maven-3.6.1-bin.tar.gz
-sudo mv ./apache-maven-3.6.1 /opt/
-sudo chown root:root ./apache-maven-3.6.1/
+sudo mv ./apache-maven-3.6.1 /opt/maven
+sudo chown root:root ./maven
 ```
 
 2. 配置环境变量
@@ -146,7 +146,7 @@ sudo chown root:root ./apache-maven-3.6.1/
 修改/etc/profile
 
 ```
-MAVEN_HOME=/opt/apache-maven-3.6.1
+MAVEN_HOME=/opt/maven
 PATH=${PATH}:${MAVEN_HOME}/bin 
 export MAVEN_HOME PATH
 ```
