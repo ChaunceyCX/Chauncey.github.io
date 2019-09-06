@@ -64,7 +64,6 @@ sudo rm /var/lib/pacman/db.lck
 git config --global user.name "ChaunceyCX"
 git config --global user.email "chaunceyxcx@gmail.com"
 #存储密码
-git config credential.helper store
 ```
 
 ## 解决关机30s问题
@@ -215,6 +214,30 @@ groovyScript("def result=''; def params=\"${_1}\".replaceAll('[\\\\[|\\\\]|\\\\s
 }; return result", methodParameters())
 
 ## 显卡
+
+1. 切换闭源显卡(如果装系统时选择了闭源跳过)
+2. 安装依赖
+
+`sudo pacman -S virtualgl lib32-virtualgl lib32-primus primus`
+
+3. 安装bumblebee
+
+`sudo mhwd -f -i pci video-hybrid-intel-nvidia-bumblebee`
+
+4. 允许服务
+`sudo systemctl enable bumblebeed`
+5. 添加用户
+
+`sudo gpasswd -a $USER bumblebee`
+
+6. 重启查看效果
+
+`glxgears  测试集显的FPS`
+
+`optirun glxgears  测试独显的FPS`
+
+`optirun nvidia-smi  查看显卡信息`
+
 
 
 
