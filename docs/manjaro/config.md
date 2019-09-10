@@ -26,3 +26,10 @@ $sudo fc-cache -f -v
 "search.followSymlinks": false
 ```
 
+## 网易云音乐字体太小
+
+>将 /usr/share/applications/netease-cloud-music.desktop 拷贝到 ~/.local/share/applications/，然后修改其中的 Exec 字段
+
+```
+Exec=netease-cloud-music --force-device-scale-factor=1.25 %U
+```
