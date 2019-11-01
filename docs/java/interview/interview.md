@@ -52,7 +52,6 @@
     - Map系列是对Collection的补充两者没有任何关系
 
 6. ArrayList和LinkedList区别?
-   
     - ArrayList基于动态数组的数据结构,LinkedList基于链表的数据结构
     - 由于两者数据结构的区别:对于随机访问(get和set)ArrayList优于LinkedList(因为LinkedList要移动指针),对于新增和删除,LinkedList占优势,因为链表只需要连接相应指针
 
