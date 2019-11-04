@@ -11,21 +11,22 @@
 
 ## 接口对接
 
-1. 中介协议查询(数据字段映射)
+### 协议类型和渠道类型有点混乱 , riskCode和productCode混乱, 产品,生效时间,失效时间没有相关字段
 
-### 协议类型和渠道类型有点混乱
+### 中介协议查询(数据字段映射)
 
 请求类型: POST
 
 入参: 
-    - comCode (机构码):prpdcompany--COMCODE [string]
-    - ~~agentType (渠道类型): prpsq_channel--channel_type~~(channel_type有三个值:1,2,3,兼业,专业,个人)
-    - agentType (渠道类型): prpsq_agreement:type
-    - agentCode(渠道代码): prpsq--id ???
-    - agentName(渠道名称): prpsq--name
-    - queryDate(查询日期): 
+- comCode (机构码):prpdcompany--COMCODE [string]
+- ~~agentType (渠道类型): prpsq_channel--channel_type~~(channel_type有三个值:1,2,3,兼业,专业,个人)
+- agentType (渠道类型): prpsq_agreement:type
+- agentCode(渠道代码): prpsq--id ???
+- agentName(渠道名称): prpsq--name
+- queryDate(查询日期): 
 
 出参:
+
 - head(返回头): SalesHeadBean
     - status(查询状态)
     - appCode(请求返回码)
@@ -47,15 +48,38 @@
     - BDProfitCode(利润中心代码)---prpsu_team_profit_center_links,prpsr_profits_center:id
     - BDProfitName(利润中心名称)---prpsu_team_profit_center_links,prpsr_profits_center:name
     - agreement(协议信息,List)---prpsq_agreeement
-        - agreementNo(协议代码):---id
-        - agreementCode(渠道协议代码):---channel_agreement_id
-        - agreemetName: ---name
-        - type(smallint):---type
-        - priority_number(int):---priority_number
-        - startDate:---start_date
-        - endDate:---end_date
-        - agreementFee(协议信息,List,Agreement) :---prpsq_agreement_product
-          - agreementNo : ---agreement_id
-          - riskCode :---product_id
-          - productCode :---product_id ???
-          - fee_limit_rate: fee_limit_rate
+      - agreementNo(协议代码):---id
+      - agreementCode(渠道协议代码):---channel_agreement_id
+      - agreemetName: ---name
+      - type(smallint):---type
+      - priority_number(int):---priority_number
+      - startDate:---start_date
+      - endDate:---end_date
+      - agreementFee(渠道信息,List,Agreement) :---prpsq_agreement_product
+        - agreementNo : ---agreement_id
+        - riskCode :---product_id
+        - productCode :---product_id ???
+        - fee_limit_rate: fee_limit_rate
+
+### 佣金查询
+
+入参:
+
+- riskCode (Y,产品): ---prpsq_agreement_product : product_id
+- productCode()
+- planCode
+- agentCode(Y,渠道代码): ---prpsq_agreement_product : agreement_id
+
+出参:
+
+- code
+- message
+- data(List<CommissionDetailVo>)
+  - agentCode: ---prpsq_agreement: id
+  - feeType : ---prpsq_agreement: cost_type
+  - agentFlag : ???
+  - commRate : ---prpsq_agreement: ???
+  - limitRate : ---prpsq_agreement_product: fee_limit_rate
+  - effDate: ???
+  - invaildDate :  ???
+  - agentType : ---prpsq_agreement: type
