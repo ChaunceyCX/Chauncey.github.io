@@ -4,4 +4,5 @@
 
   - [基本使用](/markdown/basic)
   - [Markdown拓展](/markdown/expand)
+  - [全语法](/markdown/allInOne)
   - [docsify](/markdown/docsify)
