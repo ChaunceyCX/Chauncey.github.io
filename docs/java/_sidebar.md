@@ -9,4 +9,8 @@
   - [java面试汇总](/java/interview)
   - [jackson](/java/json)
   - [springboot](/java/springboot)
+- **----------------------------**
+  - [jrebel本地热部署](/java/jrebel/jrebel-local)
+  - [jrebel远程热部署](/java/jrebel/jrebel-remote)
+- **----------------------------**
   - [其它](/java/sth)
