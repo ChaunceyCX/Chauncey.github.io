@@ -33,3 +33,11 @@ $sudo fc-cache -f -v
 ```
 Exec=netease-cloud-music --force-device-scale-factor=1.25 %U
 ```
+
+## deepin-wine-wechat
+
+> 进入相关容器的配置界面调整：显示->dpi
+
+```
+env WINEPREFIX="$HOME/.deepinwine/Deepin-WeChat" winecfg
+```
