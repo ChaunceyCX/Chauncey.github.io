@@ -3,3 +3,7 @@
   - [负载均衡](/springcloud/负载均衡与调用)
   - [服务降级](/springcloud/服务降级)
   - [网关](/springcloud/网关)
+  - [配置中心](/springcloud/配置中心)
+  - [总线](/springcloud/总线)
+  - [消息驱动](/springcloud/消息驱动)
+  - [链路监控](/springcloud/链路监控)
