@@ -100,8 +100,27 @@ npm config set registry https://registry.npm.taobao.org
 配置/etc/fstab
 
 ```
-UUID=0004BF5B00099851                     /home/chauncey/hd1 ntfs nouser,rw 0 0
-UUID=096EFA44E563571A                     /home/chauncey/hd2 ntfs nouser,rw 0 0
+
+UUID=D6BC9213BC91EE6D                     /home/chauncey/hd ntfs defaults,uid=1000,gid=1000,dmask=022,fmask=133 0 0
+```
+
+解决强制关机导致ntfs分区变成只读文件系统
+
+```shell
+# df 查看所在分区
+df -h
+
+文件系统        容量  已用  可用 已用% 挂载点
+dev             7.8G     0  7.8G    0% /dev
+run             7.8G  1.8M  7.8G    1% /run
+/dev/nvme0n1p3   94G   30G   61G   33% /
+tmpfs           7.8G   88M  7.7G    2% /dev/shm
+tmpfs           4.0M     0  4.0M    0% /sys/fs/cgroup
+tmpfs           7.8G   68M  7.7G    1% /tmp
+/dev/nvme0n1p1  256M   88M  169M   35% /boot/efi
+/dev/nvme0n1p7  277G   55G  222G   20% /home/
+# 修复分区
+sudo ntfsfix /dev/nvme0n1p7 
 ```
 
 ## jdk

@@ -41,3 +41,5 @@ Exec=netease-cloud-music --force-device-scale-factor=1.25 %U
 ```
 env WINEPREFIX="$HOME/.deepinwine/Deepin-WeChat" winecfg
 ```
+
+
