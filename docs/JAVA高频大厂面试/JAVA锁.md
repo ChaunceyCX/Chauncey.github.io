@@ -227,5 +227,42 @@ public class ReadWriteLockDemo {
 ![](res/JAVA锁.md2020-09-17-18-02-00.png)
 
 
+### CountDownLatch（到计数门闩）
+
+> 个人理解： 人都走完才能锁门
+
+- 样例代码
+
+```java
+public class CountDownLatchDemo {
+
+    private static final int countrySize = 6;
+
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(countrySize);
+        for (int i = 1; i <= 6; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName()+"\t 国灭");
+                countDownLatch.countDown();
+            }, CountryEnum.forEachCountry(i).getMsg()).start();
+        }
+
+        countDownLatch.await();
+        System.out.println("秦国一统江山");
+    }
+}
+```
+
+- 输出效果（会在6国灭完之后才会统一）
+  ![](res/JAVA锁.md2020-09-17-18-38-39.png)
+
+
+### CyclicBarrier（可循环屏障）
+
+> 人到齐才能开会
+
+
+
+
 
 
