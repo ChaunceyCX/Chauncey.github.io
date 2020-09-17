@@ -162,4 +162,70 @@ public class SpinLockDemo {
 
 ![](res/JAVA锁.md2020-09-17-12-00-54.png)
 
+### 独占锁（写锁）/共享锁（读锁）/互斥锁（读写） -- ReentrantReadWriteLock
+
+> 优点：既保证一致性又保证并发性
+
+- demo
+
+```java
+class MyCache{
+    private volatile Map<String,Object> map = new HashMap<>();
+    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
+    public void get(String key) {
+        lock.readLock().lock();
+        System.out.println(Thread.currentThread().getName()+"\t 开始读取： "+key);
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Object obj = map.get(key);
+        System.out.println(Thread.currentThread().getName()+"\t 读取完毕： "+key+"<==>" +obj);
+        lock.readLock().unlock();
+    }
+
+    public void put(String key,Object val) {
+        lock.writeLock().lock();
+        System.out.println(Thread.currentThread().getName()+"\t 开始写入： "+key+"<==>" +val);
+        try {
+            TimeUnit.MILLISECONDS.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        map.put(key, val);
+        System.out.println(Thread.currentThread().getName()+"\t 开始写入： "+key+"<==>" +val);
+        lock.writeLock().unlock();
+    }
+}
+
+public class ReadWriteLockDemo {
+
+    public static void main(String[] args) {
+        MyCache myCache = new MyCache();
+
+        for (int i = 0; i < 5; i++) {
+            String s = ""+i;
+            new Thread(() -> {
+                myCache.put(s,s);
+            },s).start();
+        }
+
+        for (int i = 0; i < 5; i++) {
+            String s = ""+i;
+            new Thread(() -> {
+                myCache.get(s);
+            },s).start();
+        }
+    }
+}
+```
+
+- 输出结果
+
+![](res/JAVA锁.md2020-09-17-18-02-00.png)
+
+
+
 
