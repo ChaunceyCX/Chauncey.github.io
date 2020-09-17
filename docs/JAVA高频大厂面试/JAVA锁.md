@@ -98,4 +98,68 @@ public class ReentrantLockDemo {
 
 ![可重入锁](res/JAVA锁.md2020-09-17-11-20-32.png)
 
+### 自旋锁spinlock
+
+> 指尝试获取锁的线程不会立即阻塞，而是采用循环的方式不断的尝试获取锁，这样的好处是减少上下文切换的消耗，缺点是循环会消耗CPU
+
+- 代码实现
+
+```java
+public class SpinLockDemo {
+
+    private AtomicReference<Thread> atomicReference = new AtomicReference<>(); //初始化时没有值就为null
+
+    public void myLock() {
+        Thread thread = Thread.currentThread();
+        System.out.println(thread.getName()+"\t come in...");
+        while (!atomicReference.compareAndSet(null,thread)) {
+
+            System.out.println(Thread.currentThread().getName()+"\t 锁被TA占用获取失败...");
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println(thread.getName()+"\t 得到锁");
+    }
+
+    public void myUnLock() {
+        Thread thread = Thread.currentThread();
+        atomicReference.compareAndSet(thread,null);
+        System.out.println(thread.getName()+"\t 释放锁");
+    }
+
+
+
+    public static void main(String[] args) {
+        SpinLockDemo spinLockDemo = new SpinLockDemo();
+
+        new Thread(() -> {
+            spinLockDemo.myLock();
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            spinLockDemo.myUnLock();
+        },"TA").start();
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new Thread(() -> {
+            spinLockDemo.myLock();
+            spinLockDemo.myUnLock();
+        },"TB").start();
+    }
+}
+```
+
+- 输出效果
+
+![](res/JAVA锁.md2020-09-17-12-00-54.png)
+
 
