@@ -143,4 +143,162 @@ public class SemaphoreDemo {
 
 
 
+### BlockingQueue
+
+#### 具体实现
+
+- ArrayBlockingQueue： 由数组构成的有界阻塞队列
+- LinkedBlockingQueue：由链表构成的有界（但是大小默认值为Integer.MAX_VALUE）阻塞队列
+- PriorityBlockingQueue： 支持优先级排序的无界阻塞队列
+- DelayQueue：使用优先级队列实现的延迟无界队列
+- SynchronousQueue： 不存储元素的阻塞队列，即单个元素队列（每一个put都要等待一个take）
+- LinkedTransferQueue：链表组成的无界阻塞队列
+- LinkedBlockingDeque：由链表组成的双向阻塞队列
+ 
+
+#### api
+
+- 会抛异常
+  - add(Obj); 添加元素，如果队列满了会报异常
+  - remove();//删除队首FIFO，
+  - remove(Obj); //删除指定  如果队列为空会抛异常
+  - element();// 查看队首元素，主要用作验证，如果队列为空会抛异常
+- 特殊值
+  - offer(Obj); 添加元素队列满了返回false
+  - peek()// 查看队首元素，如果队列为空会返回null
+  - poll() // 出对列，会删除队首元素
+- 阻塞（慎用）
+  - put(Obj) // 如果队列满了就会阻塞线程等待队列有空间
+  - take() // 如果队列空了就会阻塞线程等待队列有数
+- 超时
+  - offer(obj,timeout,TimeUnit); 超过时间停止阻塞
+  - poll(timeout,TimeUnit); 超过时间停止阻塞
+
+#### SynchronousQueue （同步队列）
+
+> 单元素队列，每次put都会阻塞等待队列元素被消费
+
+- code
+
+```java
+public class SynchronousQueueDemo {
+
+    public static void main(String[] args) {
+        BlockingQueue<String> blockingQueue = new SynchronousQueue<>();
+
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    System.out.println("入队列\t"+i);
+                    blockingQueue.put(String.valueOf(i));
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"putT").start();
+
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    TimeUnit.SECONDS.sleep(3);
+                    System.out.println("出对列\t"+blockingQueue.take());
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"takeT").start();
+    }
+}
+```
+
+- 输出效果
+
+![](res/JUC多线程及高并发.md2020-09-18-18-27-59.png)
+
+### 传统生产者消费者
+
+- code
+
+```java
+class ShareData{
+    private int num = 0;
+    private Lock lock = new ReentrantLock();
+    private Condition condition = lock.newCondition();
+
+    public void increment() {
+        lock.lock();
+        try {
+            // 判断
+            while (num != 0) {
+                condition.await();
+            }
+            //操作
+            num++;
+            System.out.println(Thread.currentThread().getName()+"\t"+num);
+            //唤醒
+            condition.signalAll();
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+        }
+    }
+
+    public void decrement() {
+        lock.lock();
+        try {
+            // 判断
+            while (num == 0) {
+                condition.await();
+            }
+            //操作
+            num--;
+            System.out.println(Thread.currentThread().getName()+"\t"+num);
+            //唤醒
+            condition.signalAll();
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            lock.unlock();
+        }
+    }
+}
+
+public class ProdConsumer_TraditionDemo {
+    public static void main(String[] args) {
+        ShareData shareData = new ShareData();
+
+        new Thread(() -> {
+            for (int i = 0; i < 6; i++) {
+                shareData.increment();
+            }
+        },"AA").start();
+
+
+
+        new Thread(() -> {
+            for (int i = 0; i < 6; i++) {
+                shareData.increment();
+            }
+        },"CC").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 6; i++) {
+                shareData.decrement();
+            }
+        },"#######BB").start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 6; i++) {
+                shareData.decrement();
+            }
+        },"#######DD").start();
+    }
+}
+```
+
+- 输出效果（生产者消费者交替）
+![](res/JUC多线程及高并发.md2020-09-18-18-26-14.png)
+
+
 
