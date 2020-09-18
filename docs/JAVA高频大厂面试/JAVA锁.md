@@ -261,7 +261,67 @@ public class CountDownLatchDemo {
 
 > 人到齐才能开会
 
+- 代码
+```java
+public class CyclicBarrierDemo {
 
+    public static void main(String[] args) {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(7,new Thread(() ->{
+            System.out.println("集齐七龙珠，召唤神龙");
+        }));
+
+        for (int i = 0; i < 7; i++) {
+            final String temp = i+"";
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName()+"\t发现龙珠"+"\t" +temp);
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+- 输出结果（等到所有龙珠集齐才会召唤神龙）
+
+![](res/JAVA锁.md2020-09-18-10-36-06.png)
+
+### Semaphore
+
+> 信号量主要用于两个目的，一个用于多个共享资源互斥使用（100个线程争夺10个资源），另一个用于并发线程数控制
+
+```java
+public class SemaphoreDemo {
+
+    public static void main(String[] args) {
+        Semaphore semaphore = new Semaphore(3);
+
+        for (int i = 0; i < 9; i++) {
+            new Thread(() -> {
+                try {
+                    semaphore.acquire();
+                    System.out.println(Thread.currentThread().getName()+"\t comin in");
+                    TimeUnit.SECONDS.sleep(3);
+                    System.out.println();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }finally {
+                    semaphore.release();
+                }
+            },String.valueOf(i)).start();
+        }
+    }
+}
+```
+
+- 结果
+
+![](res/JAVA锁.md2020-09-18-16-35-32.png)
 
 
 
