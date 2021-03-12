@@ -1,12 +1,8 @@
 # chaunceycx_NOTE
 
-> A delightfully simple theme system for [docsify.js](https://docsify.js.org)
+> 我的笔记本
 
-- Based on CSS custom properties
-- No packages to install or files to build
-- Improved desktop and mobile experience
-- Multiple themes available
-- Legacy browser support (IE10+)
+
 
 [Get Started](#markdown)
 [GitHub](https://github.com/Chaunceyxcx/note)
