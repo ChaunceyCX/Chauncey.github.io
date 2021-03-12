@@ -8,5 +8,5 @@
 - Multiple themes available
 - Legacy browser support (IE10+)
 
-[Get Started](#main)
-[GitHub](https://github.com/ChaunceyCX/Chauncey.github.io)
+[Get Started](#markdown)
+[GitHub](https://github.com/Chaunceyxcx/note)
