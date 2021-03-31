@@ -3,4 +3,5 @@
   - [gnome](/manjaro/gnome)
   - [kde](/manjaro/kde)
   - [mysql安装](/manjaro/mysql)
+  - [idea](/manjaro/idea)
   - [其它](/manjaro/config)
