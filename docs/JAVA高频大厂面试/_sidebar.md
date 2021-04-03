@@ -1,3 +1,9 @@
 - JAVA高并发
     - [java锁](/JAVA高频大厂面试/JAVA锁)
     - [JUC](/JAVA高频大厂面试/JUC多线程及高并发)
+    - [集合](/JAVA高频大厂面试/interview/interview-collection.md)
+    - [集合-ArrayListSource](/JAVA高频大厂面试/interview/ArrayListSource.md)
+    - [集合-LinkedListSourceCode](/JAVA高频大厂面试/interview/LinkedListSourceCode.md)
+    - [简单面试题-基础](/JAVA高频大厂面试/interview/interview.md)
+    - [简单面试题-线程](/JAVA高频大厂面试/interview/thread.md)
+    - [线程创建](/JAVA高频大厂面试/interview/interview-thread.md)
